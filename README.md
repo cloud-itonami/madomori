@@ -14,9 +14,10 @@ no deps → runnable under both `bb` and the kotoba pywasm runtime.
 ## Run
 
 ```bash
-bb run_tests.clj   # 39 tests / 147 assertions
+bb run_tests.clj   # 46 tests / 185 assertions
 bb --classpath . -m madomori.methods.analyze                            # → façade R0 report
 bb --classpath . -m madomori.methods.datom-emit                         # → kotoba EAVT Datom log
+bb --classpath . -m madomori.methods.citations                          # → provenance for the ★ gate constants
 ```
 
 ## What it does
@@ -28,6 +29,26 @@ bb --classpath . -m madomori.methods.datom-emit                         # → ko
 | `adhesion.clj`      | suction adhesion force vs payload × surface factor-of-safety · **adhesion-safe? RAISES below the required margin** (★ G7) |
 | `analyze.clj`       | end-to-end: load seed → coverage + budget → wind/sway envelope → adhesion FoS → **GO?** (both safety gates pass) |
 | `datom_emit.clj`    | kotoba EAVT projection (`:mado.*` GROUND + `:bond/*` DERIVED transient; G3 structural — only the on-device imagery flag is emittable) |
+
+## Provenance of the ★ gate constants
+
+Both ★ gates REFUSE work by comparing against a number, so `data/citations.edn`
+records where each number comes from — every entry quotes text fetched from the
+cited instrument (verified 2026-08-30, HTTP 200), and says what it does **not**
+establish.
+
+| Constant | Status |
+|---|---|
+| wind work-stop *exists* | **law** — ゴンドラ安全規則 第十九条「当該作業を行なつてはならない」(this is why G5 raises) |
+| wind work-stop = `10.0` m/s | **operator-set, not law** — neither ゴンドラ則 第十九条 nor クレーン則 第三十一条の二 states a figure; 気象庁 treats 強風 as a general term and puts 10–15 m/s at 「やや強い風」 |
+| anchors `:independent` | **law** — OSHA 1926.502(d)(15) "independent of any anchorage being used to support or suspend platforms" |
+| anchors `≥2` | **design decision** — the regulation requires independence, not a count |
+| `required-fos` 2.5 | **uncited** — ゴンドラ則 has no 安全係数 clause; OSHA's factor of 2 governs fall-arrest systems, not suction |
+| `surface-efficiency` | **uncited** — only the ordering glass > metal > stone is defensible at R0 |
+
+`citations/cited?` is pessimistic: an unrecorded constant reads as **uncited**,
+never as fine. Do not attach a source to an uncited number without fetching and
+reading the instrument first.
 
 ## Gates
 

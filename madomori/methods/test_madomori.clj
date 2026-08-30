@@ -15,7 +15,8 @@
             [madomori.methods.coverage :as cov]
             [madomori.methods.multi-face :as mf]
             [madomori.methods.water-recovery :as wr]
-            [madomori.methods.handoff :as ho]))
+            [madomori.methods.handoff :as ho]
+            [madomori.methods.citations :as cit]))
 
 ;; ── facade_path ──────────────────────────────────────────────────────────────
 (deftest boustrophedon-visits-every-pane-once
@@ -430,6 +431,67 @@
       (let [data (pr-str (edn/read-string day-out))]
         (is (nil? (re-find #"(?i)image|photo|imagery|interior|person|biometric|camera"
                            (str/replace data #":mado\.robot/imagery-on-device" ""))))))))
+
+
+;; ── citations (provenance for the safety-gate constants) ─────────────────────
+(deftest citation-record-loads-and-is-non-empty
+  (testing "the provenance record parses and carries entries"
+    (let [cs (cit/load-citations "data/citations.edn")]
+      (is (vector? cs))
+      (is (pos? (count cs))))))
+
+(deftest empty-citation-record-raises-rather-than-reporting-clean
+  (testing "an empty/malformed record must RAISE — reporting 'nothing uncited'
+            because nothing was read is the failure this file guards against"
+    (let [tmp (str (System/getProperty "java.io.tmpdir") "/madomori-empty-citations.edn")]
+      (spit tmp "[]")
+      (is (thrown? clojure.lang.ExceptionInfo (cit/load-citations tmp))))))
+
+(deftest every-regulatory-citation-carries-fetch-evidence
+  (testing "a cited instrument records url + verbatim quote + verified date + status"
+    (let [cs (cit/load-citations "data/citations.edn")]
+      (is (pos? (count (cit/regulatory cs))))
+      (doseq [c (cit/regulatory cs)]
+        (is (re-find #"^https://" (:citation/url c)) (str (:citation/id c) " url"))
+        (is (seq (:citation/quote c)) (str (:citation/id c) " quote"))
+        (is (= 200 (:citation/http-status c)) (str (:citation/id c) " status"))
+        (is (re-find #"^\d{4}-\d{2}-\d{2}$" (:citation/verified-at c))
+            (str (:citation/id c) " verified-at"))))))
+
+(deftest wind-threshold-is-recorded-as-not-grounded-by-the-ordinances
+  (testing "the ordinances mandate the stop but state no number — the record must
+            say so, so 10.0 is never re-justified as a legal value"
+    (let [cs (cit/load-citations "data/citations.edn")]
+      (is (seq (cit/grounds cs :gondola-19)))
+      (is (some #(re-find #"10" %) (cit/does-not-ground cs :gondola-19)))
+      (is (some #(re-find #"10" %) (cit/does-not-ground cs :crane-31-2))))))
+
+(deftest uncited-constants-are-not-reported-as-cited
+  (testing "cited? is pessimistic: gaps are uncited, and so is anything unrecorded"
+    (let [cs (cit/load-citations "data/citations.edn")]
+      (is (cit/cited? cs :gondola-19))
+      (is (cit/cited? cs :osha-1926-502-d15))
+      ;; admitted gaps must NOT read as cited — that is the point of recording them
+      (is (not (cit/cited? cs :gap-required-fos)))
+      (is (not (cit/cited? cs :gap-surface-efficiency)))
+      ;; absence of a record is absence of provenance, never a pass
+      (is (not (cit/cited? cs :never-recorded-constant))))))
+
+(deftest unknown-citation-id-raises-rather-than-returning-empty
+  (testing "asking about a constant nobody recorded must surface"
+    (let [cs (cit/load-citations "data/citations.edn")]
+      (is (thrown? clojure.lang.ExceptionInfo (cit/grounds cs :never-recorded-constant)))
+      (is (thrown? clojure.lang.ExceptionInfo (cit/does-not-ground cs :never-recorded-constant))))))
+
+(deftest report-separates-cited-from-admitted-gaps
+  (testing "the report distinguishes grounded from uncited — they must not sum
+            into one 'we have provenance' number"
+    (let [cs (cit/load-citations "data/citations.edn")
+          r (cit/report cs)]
+      (is (= (:citation-count r) (count cs)))
+      (is (pos? (:regulatory-count r)))
+      (is (pos? (:gap-count r)))
+      (is (empty? (clojure.set/intersection (set (:cited r)) (set (:uncited r))))))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (let [{:keys [fail error]} (run-tests 'madomori.methods.test-madomori)]

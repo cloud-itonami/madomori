@@ -22,7 +22,20 @@
 (def ^:const default-wind-stop-mps
   "Hard wind work-stop threshold (m/s). At or above this, façade rope/cradle work
    must STOP — per ADR-2606142020 G5 this is the fall-equivalent gate and is NOT
-   tunable up by a planner. (≈10 m/s ≈ Beaufort 5, the common industry stop.)"
+   tunable up by a planner.
+
+   PROVENANCE (data/citations.edn — read :does-not-ground before reusing this):
+     * that a stop is MANDATORY is law: ゴンドラ安全規則 第十九条 obliges the
+       employer 「当該作業を行なつてはならない」 in 強風 (:gondola-19). This is
+       why the gate RAISES rather than returning false.
+     * the NUMBER 10.0 is NOT law. Neither ゴンドラ則 第十九条 nor クレーン則
+       第三十一条の二 states a wind figure (measured 2026-08-30), and 気象庁
+       defines 強風 as a general term, not a value (:jma-wind-scale). 10.0 is the
+       operator-set threshold, chosen at the boundary where 気象庁 begins calling
+       wind 「やや強い風」(10–15 m/s).
+
+   An earlier revision of this docstring justified 10.0 as \"the common industry
+   stop\". That was unsourced; it is corrected here rather than left to be cited."
   10.0)
 
 ;; ── pendulum sway amplitude ──────────────────────────────────────────────────

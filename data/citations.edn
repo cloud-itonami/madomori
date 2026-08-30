@@ -1,0 +1,154 @@
+;; madomori 窓守 — provenance for the safety-gate constants (axis-ingest).
+;;
+;; WHY THIS FILE EXISTS
+;; -------------------
+;; madomori's two ★ gates REFUSE work: `wind-envelope/work-permitted?` (G5) and
+;; `adhesion/adhesion-safe?` (G7). Both compare against numeric thresholds that,
+;; until this file, had no recorded source. A gate that refuses on an unfounded
+;; number is theatre: it looks authoritative and cannot be audited.
+;;
+;; Each entry below was FETCHED and the quoted text read out of the response —
+;; not recalled. `:quote` is verbatim from `:url` on `:verified-at`.
+;;
+;; READ `:grounds` AND `:does-not-ground` TOGETHER. Several sources establish that
+;; a work-stop is MANDATORY while stating NO number. Citing them for the number
+;; would be fabricated provenance — worse than none, because it survives review.
+;;
+;; Re-verify:  bb --classpath . -m madomori.methods.citations
+[{:db/id -1
+  :citation/id :gondola-19
+  :citation/authority "厚生労働省 / e-Gov 法令検索"
+  :citation/instrument "ゴンドラ安全規則 第十九条（悪天候時の作業禁止）"
+  :citation/law-id "347M50002000035"
+  :citation/law-num "昭和四十七年労働省令第三十五号"
+  :citation/url "https://laws.e-gov.go.jp/law/347M50002000035"
+  :citation/api-url "https://laws.e-gov.go.jp/api/2/law_data/347M50002000035?response_format=json"
+  :citation/verified-at "2026-08-30"
+  :citation/http-status 200
+  :citation/quote
+  "事業者は、強風、大雨、大雪等の悪天候のため、ゴンドラを使用する作業の実施について危険が予想されるときは、当該作業を行なつてはならない。"
+  :citation/grounds
+  ["G5 の work-stop が存在すること自体 —— ゴンドラ（つり足場・cradle）を使う façade 作業は、強風時に事業者が作業を行なってはならない。"
+   "`work-permitted?` が false を返さず RAISE する設計 —— 法文は「行なつてはならない」であって「注意して行う」ではない。"]
+  :citation/does-not-ground
+  ["10.0 m/s という数値。この条文に数値は無い（実測: 条文全体で 安全係数 0 件、風速の数値 0 件）。"]}
+
+ {:db/id -2
+  :citation/id :crane-31-2
+  :citation/authority "厚生労働省 / e-Gov 法令検索"
+  :citation/instrument "クレーン等安全規則 第三十一条の二（強風時の作業中止）"
+  :citation/law-id "347M50002000034"
+  :citation/law-num "昭和四十七年労働省令第三十四号"
+  :citation/url "https://laws.e-gov.go.jp/law/347M50002000034"
+  :citation/verified-at "2026-08-30"
+  :citation/http-status 200
+  :citation/quote
+  "事業者は、強風のため、クレーンに係る作業の実施について危険が予想されるときは、当該作業を中止しなければならない。"
+  :citation/grounds
+  ["同じ「強風 → 中止」の構造が姉妹規則にもあること（G5 が madomori 固有の発明ではない）。"]
+  :citation/does-not-ground
+  ["10.0 m/s。実測: この規則に「平均風速」「メートル毎秒」の語は無く、数値が現れるのは
+    逸走防止の『瞬間風速が毎秒三十メートル』（第三十一条）だけで、作業中止の閾値ではない。"
+   "⚠ 『クレーン則が強風を毎秒10メートルと定義している』は誤り。本ファイル作成時にその
+    前提で探して、条文に無いことを実測した。通達・解説の数値を法文の数値と読まないこと。"]}
+
+ {:db/id -3
+  :citation/id :jma-wind-scale
+  :citation/authority "気象庁 (Japan Meteorological Agency)"
+  :citation/instrument "予報用語 — 風の強さ"
+  :citation/url "https://www.jma.go.jp/jma/kishou/know/yougo_hp/kaze.html"
+  :citation/verified-at "2026-08-30"
+  :citation/http-status 200
+  :citation/quote
+  "やや強い風 風速が10m/s以上15m/s未満の風。 … 強風 風の強い状態の総称。"
+  :citation/grounds
+  ["10.0 m/s が恣意的な丸め値ではないこと —— 気象庁の階級で風速が「やや強い風」と
+    呼ばれ始めるちょうどその境界であり、法文の『強風』に最も近い公的な下限。"]
+  :citation/does-not-ground
+  ["法的義務。気象庁は予報用語を定義するのであって労働安全の閾値を定めない。"
+   "⚠ 気象庁の『強風』は数値ではなく総称である（上の quote の後半）。したがって
+    ゴンドラ則の『強風』に一意の公的な数値は存在しない —— 10.0 は事業者が定める
+    運用閾値であって、法文から導かれた値ではない。"]}
+
+ {:db/id -4
+  :citation/id :osha-1910-27b
+  :citation/authority "U.S. OSHA"
+  :citation/instrument "29 CFR 1910.27(b)(1)(i) — Rope descent systems, Anchorages"
+  :citation/url "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.27"
+  :citation/verified-at "2026-08-30"
+  :citation/http-status 200
+  :citation/quote
+  "Before any rope descent system is used, the building owner must inform the employer, in writing that the building owner has identified, tested, certified, and maintained each anchorage so it is capable of supporting at least 5,000 pounds (2,268 kg), in any direction, for each employee attached."
+  :citation/grounds
+  ["`:facade/anchors` の `:rated-kn 22.0` —— 5,000 lbf ≒ 22.2 kN。seed の 22.0 は
+    この要求の直下ではなく直上に置くべき値であることが分かる（下の gap 参照）。"
+   "anchorage が「使う前に」認証済みでなければならないこと（計画時の gate という位置づけ）。"]
+  :citation/does-not-ground
+  ["日本国内の法的義務。OSHA は米国の規則であり、madomori の想定現場が国内なら
+    ゴンドラ則が優先する。ここでは façade 作業の anchorage 要求水準の参照として使う。"]}
+
+ {:db/id -5
+  :citation/id :osha-1926-502-d15
+  :citation/authority "U.S. OSHA"
+  :citation/instrument "29 CFR 1926.502(d)(15) — Personal fall arrest systems, anchorages"
+  :citation/url "https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.502"
+  :citation/verified-at "2026-08-30"
+  :citation/http-status 200
+  :citation/quote
+  "Anchorages used for attachment of personal fall arrest equipment shall be independent of any anchorage being used to support or suspend platforms and capable of supporting at least 5,000 pounds (22.2 kN) per employee attached, or shall be designed, installed, and used as follows: (i) as part of a complete personal fall arrest system which maintains a safety factor of at least two; and (ii) under the supervision of a qualified person."
+  :citation/grounds
+  ["`fall-arrest-redundant?` が要求する `:independent true` —— 「independent of any
+    anchorage being used to support or suspend platforms」が法文の語そのもの。
+    madomori の独立性は用語の借用ではなく、この要求の実装である。"
+   "fall-arrest における factor-of-safety の下限 2。"]
+  :citation/does-not-ground
+  ["≥2 という *本数*。法文が要求するのは吊り下げ用アンカーからの独立であって、
+    fall-arrest アンカーを 2 本にすることではない。2 本は madomori が単一故障点を
+    排除するために置いた設計判断（下の gap 参照）。"
+   "suction adhesion の 2.5。この 2 は fall arrest system の係数であり、吸着の係数ではない。"]}
+
+ ;; ── 出典が見つからなかったもの（0 件を clean と読まないための記録）──────────
+ ;;
+ ;; 探して無かったことは、探していないこととは違う。以下は実際に探した結果である。
+ {:db/id -6
+  :citation/id :gap-required-fos
+  :citation/kind :uncited-assumption
+  :citation/subject "adhesion/adhesion-safe? の `required-fos` 既定値 2.5"
+  :citation/searched
+  ["ゴンドラ安全規則 全文 — 「安全係数」0 件（実測 2026-08-30）"
+   "クレーン等安全規則 全文 — 吸着に関する係数の規定なし"
+   "OSHA 1926.502(d)(15) — safety factor 2 は fall arrest system のものであって吸着ではない"]
+  :citation/status
+  "UNCITED。2.5 は工学的な仮定であって、規制由来の値ではない。検証できた唯一の
+   法定係数（OSHA の 2）より保守側に在るという関係だけが言える。"
+  :citation/do-not
+  "この値に出典を付けたくなったら、吸着/真空揚重の規格（例 ASME B30.20 系）を
+   実際に取得して条文を読んでから足すこと。paywall で本文を読めない規格を、
+   読んだかのように引用しない。"}
+
+ {:db/id -7
+  :citation/id :gap-two-anchors
+  :citation/kind :design-decision
+  :citation/subject "fall-arrest-redundant? の閾値 ≥2 本"
+  :citation/status
+  "規制ではなく設計判断。OSHA 1926.502(d)(15) が要求するのは吊り下げ用アンカーからの
+   *独立性*であって本数ではない。2 本は単一故障点を排除するために madomori が置いた。"
+  :citation/do-not
+  "『法令が 2 本を要求している』と書かないこと。要求されているのは独立性である。"}
+
+ {:db/id -8
+  :citation/id :gap-surface-efficiency
+  :citation/kind :uncited-assumption
+  :citation/subject "adhesion/surface-efficiency {:glass 0.95 :metal 0.80 :stone 0.45}"
+  :citation/status
+  "UNCITED。面ごとの吸着効率は実測値ではなく、順序（glass > metal > stone）だけが
+   物理的に妥当な仮定。R0 は design+sim なので、実機で測るまでこの 3 値を
+   『測定された効率』として報告しないこと。"}
+
+ {:db/id -9
+  :citation/id :gap-facility-seed
+  :citation/kind :representative-data
+  :citation/subject "data/facade.edn の `:facade/facility {:sourcing :representative}`"
+  :citation/status
+  "実在の建物ではない。seed 自身が `:sourcing :representative` と申告している。
+   この seed から出た数値を実測値として引用しないこと。"}]
