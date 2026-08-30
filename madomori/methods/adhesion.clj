@@ -16,6 +16,10 @@
 ;; ── surface adhesion efficiency (G7) ─────────────────────────────────────────
 ;; Fraction of nominal suction force a surface actually delivers (sealing quality).
 ;; Glass: near-perfect seal; metal: good; stone: porous → much weaker.
+;; PROVENANCE: UNCITED (data/citations.edn :gap-surface-efficiency). These are
+;; assumptions, not measurements — only the ORDER (glass > metal > stone) is
+;; physically defensible. R0 is design+sim: do not report these as measured
+;; efficiencies until a real unit is instrumented on a real surface.
 (def surface-efficiency
   {:glass 0.95
    :metal 0.80
@@ -50,7 +54,14 @@
   "★ G7 adhesion gate. Returns true iff the achieved factor-of-safety meets or
    exceeds `required-fos`; otherwise RAISES (it never returns false — an unsafe
    adhesion margin must surface, not be silently accepted). A fall is the failure
-   mode, so this is a hard refusal like the wind gate."
+   mode, so this is a hard refusal like the wind gate.
+
+   PROVENANCE: the default 2.5 is UNCITED (data/citations.edn :gap-required-fos).
+   Searched 2026-08-30: ゴンドラ安全規則 contains no 安全係数 clause at all, and
+   the only verified statutory factor — OSHA 1926.502(d)(15)(i) \"a safety factor
+   of at least two\" — governs fall-arrest SYSTEMS, not suction adhesion. All that
+   can honestly be said is that 2.5 sits conservative of that 2. Do not attach a
+   source to this number without fetching and reading the standard first."
   [{:keys [suction-force-n surface mass-kg required-fos]
     :or {required-fos 2.5}}]
   (let [fos (factor-of-safety suction-force-n surface mass-kg)]
