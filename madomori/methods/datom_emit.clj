@@ -20,7 +20,7 @@
 ;; Pure Clojure, no deps → babashka-runnable AND kotoba-pywasm-portable.
 ;; Per ADR-2606142020 (madomori R0).
 (ns madomori.methods.datom-emit
-  (:require [kotoba.lang.text :as str]
+  (:require [clojure.string :as str]
             [madomori.methods.analyze :as az]))
 
 (defn fmt
