@@ -5,7 +5,7 @@
   (:require [clojure.test :refer [deftest is testing run-tests]]
             [clojure.edn :as edn]
             [clojure.set]
-            [kotoba.lang.text :as str]
+            [clojure.string :as str]
             [madomori.methods.facade-path :as fp]
             [madomori.methods.wind-envelope :as we]
             [madomori.methods.adhesion :as ad]
