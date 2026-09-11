@@ -14,10 +14,10 @@ no deps → runnable under both `bb` and the kotoba pywasm runtime.
 ## Run
 
 ```bash
-bb run_tests.cljk   # 46 tests / 185 assertions
-bb --classpath . -m madomori.methods.analyze                            # → façade R0 report
-bb --classpath . -m madomori.methods.datom-emit                         # → kotoba EAVT Datom log
-bb --classpath . -m madomori.methods.citations                          # → provenance for the ★ gate constants
+kbb run_tests.cljk   # 46 tests / 185 assertions
+kbb --classpath . -m madomori.methods.analyze                            # → façade R0 report
+kbb --classpath . -m madomori.methods.datom-emit                         # → kotoba EAVT Datom log
+kbb --classpath . -m madomori.methods.citations                          # → provenance for the ★ gate constants
 ```
 
 ## What it does

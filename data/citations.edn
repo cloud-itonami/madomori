@@ -14,7 +14,7 @@
 ;; a work-stop is MANDATORY while stating NO number. Citing them for the number
 ;; would be fabricated provenance — worse than none, because it survives review.
 ;;
-;; Re-verify:  bb --classpath . -m madomori.methods.citations
+;; Re-verify:  kbb --classpath . -m madomori.methods.citations
 [{:db/id -1
   :citation/id :gondola-19
   :citation/authority "厚生労働省 / e-Gov 法令検索"
