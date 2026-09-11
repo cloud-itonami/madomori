@@ -1,5 +1,5 @@
 ;; madomori 窓守 — test suite (clojure.test, babashka-runnable).
-;; Run: bb run_tests.clj
+;; Run: bb run_tests.cljk
 ;; Per ADR-2606142020 (madomori R0).
 (ns madomori.methods.test-madomori
   (:require [clojure.test :refer [deftest is testing run-tests]]

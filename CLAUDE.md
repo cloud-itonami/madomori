@@ -66,7 +66,7 @@ com-etzhayyim-madomori/
 
 ```bash
 # from repo root (classpath = 20-actors, ns = madomori.methods.*)
-bb run_tests.clj   # full standalone suite
+bb run_tests.cljk   # full standalone suite
 bb --classpath . -m madomori.methods.analyze                            # → report
 bb --classpath . -m madomori.methods.datom-emit                         # → EAVT Datom log
 ```

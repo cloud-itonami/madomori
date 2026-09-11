@@ -1,0 +1,20 @@
+{:format :kotoba.cljk-origin/v1
+ :renamed-on "2026-09-11"
+ :decision "adr-2609111500-cljk-rename-all-clojure-source (com-junkawasaki/root 90-docs/adr; owner instruction 2026-09-11)"
+ :rule "value = the extension the file had before the rename. A path ending in .clj.cljk or .cljs.cljk kept it in the name because both platform files existed (or the plain target was taken)."
+ :origins
+ {"madomori/cells/social_post/state_machine.cljk" ".cljc"
+  "madomori/methods/adhesion.cljk" ".clj"
+  "madomori/methods/analyze.cljk" ".clj"
+  "madomori/methods/anchor.cljk" ".clj"
+  "madomori/methods/citations.cljk" ".clj"
+  "madomori/methods/coverage.cljk" ".clj"
+  "madomori/methods/datom_emit.cljk" ".clj"
+  "madomori/methods/facade_path.cljk" ".clj"
+  "madomori/methods/handoff.cljk" ".clj"
+  "madomori/methods/multi_face.cljk" ".clj"
+  "madomori/methods/social.cljk" ".cljc"
+  "madomori/methods/test_madomori.cljk" ".clj"
+  "madomori/methods/water_recovery.cljk" ".clj"
+  "madomori/methods/wind_envelope.cljk" ".clj"
+  "run_tests.cljk" ".clj"}}
