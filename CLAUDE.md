@@ -66,9 +66,9 @@ com-etzhayyim-madomori/
 
 ```bash
 # from repo root (classpath = 20-actors, ns = madomori.methods.*)
-bb run_tests.cljk   # full standalone suite
-bb --classpath . -m madomori.methods.analyze                            # → report
-bb --classpath . -m madomori.methods.datom-emit                         # → EAVT Datom log
+kbb run_tests.cljk   # full standalone suite
+kbb --classpath . -m madomori.methods.analyze                            # → report
+kbb --classpath . -m madomori.methods.datom-emit                         # → EAVT Datom log
 ```
 
 ## Why the safety envelope is the heart of the actor
