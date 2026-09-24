@@ -3,7 +3,7 @@
 ;; Per ADR-2606142020 (madomori R0).
 (ns madomori.methods.test-madomori
   (:require [kotoba.test :refer [deftest is testing run-tests]]
-            [clojure.edn :as edn]
+            [kotoba.lang.edn :as edn]
             [clojure.set]
             [clojure.string :as str]
             [madomori.methods.facade-path :as fp]
@@ -193,7 +193,7 @@
       (is (re-find #":bond/go" out))
       (is (re-find #":derived\]" out))
       ;; well-formed EDN vector of datoms
-      (is (vector? (clojure.edn/read-string out))))))
+      (is (vector? (kotoba.lang.edn/read-string out))))))
 
 ;; ── handoff (cross-actor chain edge: madomori→tatekata repair-order) ─────────
 (deftest outbound-to-tatekata

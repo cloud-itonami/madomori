@@ -11,7 +11,7 @@
 ;; Pure Clojure, no deps → babashka-runnable AND kotoba-pywasm-portable.
 ;; Per ADR-2606142020 (madomori R0).
 (ns madomori.methods.citations
-  (:require [clojure.edn :as edn]))
+  (:require [kotoba.lang.edn :as edn]))
 
 (def ^:const default-path "data/citations.edn")
 

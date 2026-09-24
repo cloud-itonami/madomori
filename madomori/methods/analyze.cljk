@@ -11,7 +11,7 @@
 ;; Pure Clojure, no deps → babashka-runnable AND kotoba-pywasm-portable.
 ;; Per ADR-2606142020 (madomori R0).
 (ns madomori.methods.analyze
-  (:require [clojure.edn :as edn]
+  (:require [kotoba.lang.edn :as edn]
             [madomori.methods.facade-path :as fp]
             [madomori.methods.wind-envelope :as we]
             [madomori.methods.adhesion :as ad]
