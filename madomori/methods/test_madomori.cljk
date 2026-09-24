@@ -2,7 +2,7 @@
 ;; Run: kbb run_tests.cljk
 ;; Per ADR-2606142020 (madomori R0).
 (ns madomori.methods.test-madomori
-  (:require [clojure.test :refer [deftest is testing run-tests]]
+  (:require [kotoba.test :refer [deftest is testing run-tests]]
             [clojure.edn :as edn]
             [clojure.set]
             [clojure.string :as str]
