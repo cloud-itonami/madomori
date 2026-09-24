@@ -19,7 +19,7 @@
 ;; Pure Clojure, no deps → babashka-runnable AND kotoba-pywasm-portable.
 ;; Per ADR-2606142020 (madomori R0→R1 integration).
 (ns madomori.methods.handoff
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn assert-handoff!
   "RAISE if a handoff lacks a source or destination actor (no unattributed chain
