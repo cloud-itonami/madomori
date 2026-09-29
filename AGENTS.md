@@ -47,7 +47,7 @@ pywasm runtime. madomori mirrors the kuramori 倉守 reference idiom (ADR-260614
 
 ```
 com-etzhayyim-madomori/
-├── CLAUDE.md                       # this file
+├── AGENTS.md                       # this file
 ├── manifest.edn                    # actor manifest (5 cells, 8 gates, Clojure methods)
 ├── data/
 │   └── facade.edn                  # reference high-rise tower face seed (:representative)

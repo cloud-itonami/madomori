@@ -56,6 +56,6 @@ R0 design+sim only (G1, no-server-key) · water + chemical minimization (G2) · 
 privacy-by-construction — on-device imagery only, no person/interior recognition (G3) ·
 Displacement-Dividend-coupled (G4) · ★ wind work-stop + fall-arrest redundancy raise (G5) ·
 Murakumo-only (G6) · ★ adhesion factor-of-safety raises (G7) · tazuna-teleoperable (G8).
-See `CLAUDE.md` for the full text.
+See `AGENTS.md` for the full text.
 
 Apache 2.0 + etzhayyim Charter Compliance Rider v3.1.
